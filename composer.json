@@ -29,15 +29,5 @@
         "classmap": [
             "tests/TestCase.php"
         ]
-    },
-    "scripts": {
-        "post-install-cmd": [
-            "php artisan vendor:publish --provider='AgusRdz\\GitHub\\Providers\\GitHubApiServiceProvider::class' --tag=config",
-            "php artisan optimize"
-        ],
-        "post-update-cmd": [
-            "php artisan vendor:publish --provider='AgusRdz\\GitHub\\Providers\\GitHubApiServiceProvider::class' --tag=config",
-            "php artisan optimize"
-        ]
     }
 }
