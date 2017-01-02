@@ -10,8 +10,7 @@ matrix:
 sudo: required
 before_install:
   - sudo apt-get update > /dev/null
-before_script: composer require atoum/atoum
-script: vendor/bin/atoum
+script: phpunit /tests/GitHubApiTest.php
 notifications:
   on_success: never
   on_failure: always
