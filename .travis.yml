@@ -11,7 +11,7 @@ before_script:
 script: phpunit
 matrix:
   fast_finish: true
-sudo: false
+sudo: true
 notifications:
   on_success: never
   on_failure: always
