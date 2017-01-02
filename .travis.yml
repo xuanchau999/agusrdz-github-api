@@ -17,4 +17,4 @@ notifications:
   on_failure: always
 branches:
   only:
-    -master
+    - master
