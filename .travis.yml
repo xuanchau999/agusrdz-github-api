@@ -6,9 +6,10 @@ matrix:
 sudo: required
 before_install:
   - sudo apt-get update > /dev/null
-script:
-  composer install
-  phpunit
+before_script:
+  - composer self-update
+  - composer install --prefer-source --no-interaction --dev
+script: phpunit
 branches:
   only:
     - master
