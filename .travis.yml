@@ -5,10 +5,12 @@ php:
   - '7.0'
   - '7.1'
   - hhvm
-script: phpunit
+script: phpunit --configuration phpunit.xml --coverage-text
 matrix:
   fast_finish: true
 sudo: required
+before_install:
+  - sudo apt-get update > /dev/null
 notifications:
   on_success: never
   on_failure: always
