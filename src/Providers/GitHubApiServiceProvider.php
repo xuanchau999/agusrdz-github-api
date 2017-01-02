@@ -22,7 +22,7 @@ class GitHubApiServiceProvider extends ServiceProvider
     */
     public function register()
     {
-        $this->app->singleton('AgusRdz\GitHub\Contracts\GitHub', function($app) {
+        $this->app['GitHubApi'] = $this->app->singleton('AgusRdz\GitHub\Contracts\GitHub', function($app) {
             return new AgusRdz\GitHub\GitHubManager::class;
         });
     }
