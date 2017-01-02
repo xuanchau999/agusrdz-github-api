@@ -5,7 +5,7 @@ php:
   - '7.0'
   - '7.1'
   - hhvm
-script: vendor/bin/phpunit tests/
+script: phpunit tests/
 matrix:
   fast_finish: true
 sudo: required
