@@ -1,17 +1,13 @@
 language: php
 php:
-  - '5.5'
   - '5.6'
-  - '7.0'
-  - '7.1'
-  - hhvm
 matrix:
   fast_finish: true
 sudo: required
 before_install:
   - sudo apt-get update > /dev/null
 script:
-  composer install --dev
+  composer install
   phpunit /tests/
 branches:
   only:
