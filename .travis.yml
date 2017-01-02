@@ -8,7 +8,7 @@ before_install:
   - sudo apt-get update > /dev/null
 script:
   composer install
-  phpunit /tests/
+  phpunit
 branches:
   only:
     - master
