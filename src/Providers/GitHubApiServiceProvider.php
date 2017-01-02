@@ -2,6 +2,7 @@
 namespace AgusRdz\GitHub\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use AgusRdz\GitHub\GitHubManager;
 
 class GitHubApiServiceProvider extends ServiceProvider
 {
@@ -23,7 +24,7 @@ class GitHubApiServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app['GitHubApi'] = $this->app->singleton('AgusRdz\GitHub\Contracts\GitHub', function($app) {
-            return new AgusRdz\GitHub\GitHubManager::class;
+            return new GitHubManager();
         });
     }
 
