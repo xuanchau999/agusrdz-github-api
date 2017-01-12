@@ -5,10 +5,18 @@ use AgusRdz\GitHub\GitHubManager;
 class GitHubApiTest extends TestCase {
 
     protected $api;
+    protected $client_id;
+    protected $client_secret;
+    protected $username;
+    protected $usernameFake;
 
     public function setUp()
     {
         $this->api = new GitHubManager();
+        $this->client_id = '689883e12c57c17f13a2';
+        $this->client_secret = '119e7707649dfca9c19ce221a50fbdb73bad18b2';
+        $this->username = 'AgusRdz';
+        $this->usernameFake = 'AgusRdzFake';
     }
 
     /**
@@ -16,21 +24,9 @@ class GitHubApiTest extends TestCase {
      */
     public function testGetValidUserProfile()
     {
-
-        $username = 'AgusRdz';
-        $response = $this->api->getProfile($username);
-        $expected = "https://api.github.com/users/{$username}";
-        $this->assertEquals($expected, $response['url']);
-    }
-
-    /**
-     * @test Attempt get an invalid user profile
-     */
-    public function testGetInValidUserProfile()
-    {
-        $username = 'AgusRdzFake';
-        $response = $this->api->getProfile($username);
-        $this->assertEquals('Not Found', $response);
+        $response = $this->api->getProfile($this->username, $this->client_id, $this->client_secret);
+        $expected = "https://github.com/{$this->username}";
+        $this->assertEquals($expected, $response['html_url']);
     }
 
     /**
@@ -38,19 +34,8 @@ class GitHubApiTest extends TestCase {
      */
     public function testGetValidUserFollowers()
     {
-        $username = 'AgusRdz';
-        $response = $this->api->getFollowers($username);
+        $response = $this->api->getFollowers($this->username, $this->client_id, $this->client_secret);
         $this->assertNotNull($response);
-    }
-
-    /**
-     * @test Attempt get the followers of an invalid user profile
-     */
-    public function testGetInValidUserFollowers()
-    {
-        $username = 'AgusRdzFake';
-        $response = $this->api->getFollowers($username);
-        $this->assertEquals('Not Found', $response);
     }
 
     /**
@@ -58,19 +43,8 @@ class GitHubApiTest extends TestCase {
      */
     public function testGetValidUserRepos()
     {
-        $username = 'AgusRdz';
-        $response = $this->api->getRepositories($username);
+        $response = $this->api->getRepositories($this->username, $this->client_id, $this->client_secret);
         $this->assertNotNull($response);
-    }
-
-    /**
-     * @test Attempt get the repositories of an invalid user profile
-     */
-    public function testGetInValidUserRepos()
-    {
-        $username = 'AgusRdzFake';
-        $response = $this->api->getRepositories($username);
-        $this->assertEquals('Not Found', $response);
     }
 
     /**
@@ -78,22 +52,10 @@ class GitHubApiTest extends TestCase {
      */
     public function testGetValidCommitsByRepo()
     {
-        $username = 'AgusRdz';
         $repo = 'futureed-oauth2';
-        $response = $this->api->getCommitsByRepository($username, $repo);
-        $expected = "https://api.github.com/users/{$username}";
+        $response = $this->api->getCommitsByRepository($this->username, $repo, $this->client_id, $this->client_secret);
+        $expected = "https://api.github.com/users/{$this->username}";
         $this->assertNotNull($response);
-    }
-
-    /**
-     * @test Attempt get the commits of specified repository of an invalid user profile
-     */
-    public function testGetInvalidCommitsByRepo()
-    {
-        $username = 'AgusRdzFake';
-        $repo = 'futureed-oauth2Fake';
-        $response = $this->api->getCommitsByRepository($username, $repo);
-        $this->assertEquals('Not Found', $response);
     }
 
     /**
@@ -101,8 +63,7 @@ class GitHubApiTest extends TestCase {
      */
     public function testGetTotalCommitsByUser()
     {
-        $username = 'AgusRdz';
-        $response = $this->api->getTotalCommits($username);
+        $response = $this->api->getTotalCommits($this->username, $this->client_id, $this->client_secret);
         $this->assertInternalType("int", $response);
     }
 
