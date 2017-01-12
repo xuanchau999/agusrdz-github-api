@@ -1,102 +1,105 @@
-Create a new folder {vendor}-{name}. Ex. agusrdz-github-api
+Creating a custom composer package from scratch
+==================================
 
-mkdir -p agusrdz-github-api && cd agusrdz-github-api
+In this post I'll learn to you how to create a custom package using composer to consume the GitHub API, well in order to create a custom composer package you need create the folder structure, for example:
+```
+|- vendor/name
+  |- src
+    |- Contracts
+    |- Models
+    |- Providers
+  |- tests
+  |- vendor
+```
 
-Init your repo
+After create the base structure, in the terminal type:
+```
+git init #initialize git tracking
+composer init #this command will guide you throuhg creating your composer.json file
+```
 
-git init
+#### composer.json file configuration
+1. Set package name vendor/name, in this case :`agusrdz/github-api`.
+2. Add a package description: `This is a demo package to use the API of Github.`.
+3. Add an author: `Your name` `your@email.com`.
+4. Add minimum stability for package: `dev`.
+5. Define your dependencies (require) for production manually instead interactively.
+6. Define your dependencies (require-dev) for development manually instead interactively.
+7. Confirm the generation of composer.json file.
+8. Confirm if you want that the `vendor` directory added to your .gitignore file.
+9. Now you only need add all dependencies required to use the package.
+10. After edit the composer.json file run `composer install` on your terminal.
 
-Init composer
-
-composer init
-
-This command will guide you through creating your composer.json file.
-
-Set package name vendor/name, in this case agusrdz/github-api
-
-Add a package description
-
-Add an author: Your name your@email.com
-
-Add minimum stability for package: dev
-
-Define your dependencies (require) for production manually instead interactively
-
-Define your dependencies (require-dev) for development manually instead interactively.
-
+```
 {
-    "name": "juniorgrossi/hello-world",
-    "description": "My first Composer project",
+  "name": "agusrdz/github-api",
+    "description": "This is a demo package to use the API of Github.",
+    "type": "package",
+    "license": "MIT",
     "authors": [
-        {
-            "name": "Your Name",
-            "email": "your@name.com"
+      {
+          "name": "Agustin Espinoza",
+          "email": "agustinurdz_@hotmail.com"
         }
     ],
     "minimum-stability": "dev",
     "require": {
-
-    }
+      "php": ">=5.6",
+        "guzzlehttp/guzzle": "^6.1",
+        "jenssegers/model": "^1.1"
+    },
+    "require-dev": {
+      "phpunit/phpunit": "~5.0",
+        "phpunit/phpunit-mock-objects": "~3.0",
+        "illuminate/support": "^5.3"
+   }
 }
-Confirm the generation of composer.json file
+```
 
-Confirm if you want thaht the vendor directory added to your .gitignore file
+That's it!!!
 
-Now add all dependencies required to use the package, for example:
+Well, almost that's it... basically this is the composer.json required to create a composer package but we need add some lines more to define the parameters as autoload, unit test and prefered stability; so go to composer.json and add this after `required-dev`.
 
-  {
-    "name": "agusrdz/github-api",
-    "description": "This is a demo package to use the API of Github.",
-    "type": "package",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Agustin Espinoza",
-            "email": "agustinurdz_@hotmail.com"
-        }
-    ],
-    "minimum-stability": "dev",
-    "require": {
-      "php": ">=5.6"
-    },
-    "require-dev": {
-      "phpunit/phpunit": "~5.0",
-      "phpunit/phpunit-mock-objects": "~3.0"
+```
+"require-dev": {
+  "phpunit/phpunit": "~5.0",
+    "phpunit/phpunit-mock-objects": "~3.0",
+    "illuminate/support": "^5.3"
+},
+"autoload": {
+  "psr-4": {
+      "AgusRdz\\GitHub\\": "src/"
     }
-  }
-The next steps are create two folders called:
-src and tests
+},
+"autoload-dev": {
+  "classmap": [
+      "tests/TestCase.php"
+    ]
+}
+```
 
-mkdir -p src tests
+And then add the phpunit.xml file on root folder.
 
-Inside src folder we need create the folders required for our package, in this example I'll create the folders Facades and Providers.
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false"
+         syntaxCheck="false"
+        >
+    <testsuites>
+        <testsuite name="Your package's test suit">
+            <directory>./tests/</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
+```
 
-Now we'll mapping the src folders to psr-4 convention on the composer.json to autoload the package on start application
-
-  {
-    "name": "agusrdz/github-api",
-    "description": "This is a demo package to use the API of Github.",
-    "type": "package",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Agustin Espinoza",
-            "email": "agustinurdz_@hotmail.com"
-        }
-    ],
-    "minimum-stability": "dev",
-    "require": {
-      "php": ">=5.6"
-    },
-    "require-dev": {
-      "phpunit/phpunit": "~5.0",
-      "phpunit/phpunit-mock-objects": "~3.0"
-    },
-    "autoload": {
-      "psr-4": {
-        "AgusRdz\\GitHub\\": "src/"
-      }
-    }
-  }
-Run
-composer install
+Finally we are already to create the logic of this package.
+You can visit the [repo](https://github.com/AgusRdz/agusrdz-github-api) to see all code and check this [demo](#) based on Laravel to see how it works.
