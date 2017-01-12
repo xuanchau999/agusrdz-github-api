@@ -15,11 +15,20 @@ class GitHubManager implements GitHubContract
 {
     protected $uri;
     protected $client;
+    protected $headers;
 
     public function __construct()
     {
         $this->client = new Client();
         $this->uri = 'https://api.github.com/users/';
+        $this->headers = [
+            'headers' => [
+                [
+                    'Accept' => 'application/vnd.github.v3+json',
+                    'User-Agent' => 'Awesome-Octocat-App'
+                ]
+            ]
+        ];
     }
 
     /**
@@ -27,21 +36,17 @@ class GitHubManager implements GitHubContract
      * @param  string $username
      * @return mixed
      */
-    public function getProfile($username, $client_id, $client_secret)
+    public function getProfile($username, $accessToken)
     {
-        $url = $this->uri.$username.'?client_id='.$client_id.'&client_secret='.$client_secret;
+        $url = $this->uri.$username.'?access_token='.$accessToken;
         try {
-            $response = $this->client->request('GET', $this->uri.$username,
-                                                ['headers' =>
-                                                    ['Accept' => 'application/vnd.github.v3+json']
-                                                ]);
+            $response = $this->client->request('GET', $url, $this->headers);
             $user = new GitHubUser();
             $user->fill(json_decode($response->getBody(), true));
             return $user;
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             $response = $e->getResponse();
-            $responseBodyAsString = $response->getBody()->getContents();
-            throw new \Exception($responseBodyAsString, 1);
+            throw new \Exception($response->getBody()->getContents(), 1);
         }
     }
 
@@ -50,14 +55,11 @@ class GitHubManager implements GitHubContract
      * @param @param  string $username
      * @return mixed
      */
-    public function getFollowers($username, $client_id, $client_secret)
+    public function getFollowers($username, $accessToken)
     {
-        $url = $this->uri.$username.'/followers?client_id='.$client_id.'&client_secret='.$client_secret;
+        $url = $this->uri.$username.'/followers?access_token='.$accessToken;
         try {
-            $response = $this->client->request('GET', $this->uri.$username.'/followers',
-                                                ['headers' =>
-                                                    ['Accept' => 'application/vnd.github.v3+json']
-                                                ]);
+            $response = $this->client->request('GET', $url, $this->headers);
             $array = json_decode($response->getBody(), true);
             $followers = [];
             foreach ($array as $element) {
@@ -69,8 +71,7 @@ class GitHubManager implements GitHubContract
             return $collection;
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             $response = $e->getResponse();
-            $responseBodyAsString = $response->getBody()->getContents();
-            throw new \Exception($responseBodyAsString, 1);
+            throw new \Exception($response->getBody()->getContents(), 1);
         }
     }
 
@@ -79,14 +80,11 @@ class GitHubManager implements GitHubContract
      * @param @param  string $username
      * @return mixed
      */
-    public function getFollowings($username, $client_id, $client_secret)
+    public function getFollowings($username, $accessToken)
     {
-        $url = $this->uri.$username.'/following?client_id='.$client_id.'&client_secret='.$client_secret;
+        $url = $this->uri.$username.'/following?access_token='.$accessToken;
         try {
-            $response = $this->client->request('GET', $url,
-                                                ['headers' =>
-                                                    ['Accept' => 'application/vnd.github.v3+json']
-                                                ]);
+            $response = $this->client->request('GET', $url, $this->headers);
             $array = json_decode($response->getBody(), true);
             $followings = [];
             foreach ($array as $element) {
@@ -98,8 +96,7 @@ class GitHubManager implements GitHubContract
             return $collection;
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             $response = $e->getResponse();
-            $responseBodyAsString = $response->getBody()->getContents();
-            throw new \Exception($responseBodyAsString, 1);
+            throw new \Exception($response->getBody()->getContents(), 1);
         }
     }
 
@@ -108,14 +105,11 @@ class GitHubManager implements GitHubContract
      * @param  string $username
      * @return mixed
      */
-    public function getRepositories($username, $client_id, $client_secret)
+    public function getRepositories($username, $accessToken)
     {
-        $url = $this->uri.$username.'/repos?client_id='.$client_id.'&client_secret='.$client_secret;
+        $url = $this->uri.$username.'/repos?access_token='.$accessToken;
         try {
-            $response = $this->client->request('GET', $this->uri.$username.'/repos',
-                                                ['headers' =>
-                                                    ['Accept' => 'application/vnd.github.v3+json']
-                                                ]);
+            $response = $this->client->request('GET', $url, $this->headers);
             $array = json_decode($response->getBody(), true);
             $repositories = [];
             foreach ($array as $element) {
@@ -127,8 +121,7 @@ class GitHubManager implements GitHubContract
             return $collection;
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             $response = $e->getResponse();
-            $responseBodyAsString = $response->getBody()->getContents();
-            throw new \Exception($responseBodyAsString, 1);
+            throw new \Exception($response->getBody()->getContents(), 1);
         }
     }
 
@@ -138,23 +131,19 @@ class GitHubManager implements GitHubContract
      * @param  string $repository
      * @return mixed
      */
-    public function getCommitsByRepository($username, $repository, $client_id, $client_secret)
+    public function getCommitsByRepository($username, $repository, $accessToken)
     {
-        $uri = 'https://api.github.com/repos/'.$username.'/'.$repository.'/commits?client_id='.$client_id.'&client_secret='.$client_secret;
+        $url = 'https://api.github.com/repos/'.$username.'/'.$repository.'/commits?access_token='.$accessToken;
         try {
-            $response = $this->client->request('GET', $uri,
-                                                ['headers' =>
-                                                    ['Accept' => 'application/vnd.github.v3+json']
-                                                ]);
+            $response = $this->client->request('GET', $url, $this->headers);
             return json_decode($response->getBody(), true);
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             $response = $e->getResponse();
-            $responseBodyAsString = $response->getBody()->getContents();
-            $json = json_decode($responseBodyAsString, true);
+            $json = json_decode($response->getBody()->getContents(), true);
             if($json['message'] === 'Git Repository is empty.')
                 return 0;
 
-            throw new \Exception($responseBodyAsString, 1);
+            throw new \Exception($response->getBody()->getContents(), 1);
         }
     }
 
@@ -163,12 +152,12 @@ class GitHubManager implements GitHubContract
      * @param  string $username
      * @return mixed
      */
-    public function getTotalCommits($username, $client_id, $client_secret)
+    public function getTotalCommits($username, $accessToken)
     {
-        $repositories = $this->getRepositories($username, $client_id, $client_secret);
+        $repositories = $this->getRepositories($username, $accessToken);
         $commits = 0;
         foreach ($repositories as $repository) {
-            $currentRepo = $this->getCommitsByRepository($username, $repository['name'], $client_id, $client_secret);
+            $currentRepo = $this->getCommitsByRepository($username, $repository['name'], $accessToken);
             if(is_array($currentRepo)){
                 $commits = $commits + count($currentRepo);
             }
