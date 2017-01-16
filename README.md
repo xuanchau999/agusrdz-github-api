@@ -1,7 +1,13 @@
-Creating a custom composer package from scratch
+Creating a custom Composer package from scratch
 ==================================
 
+## What is Composer?
+
+Composer is a dependency manager for PHP. Composer will manage the 
+dependencies you require on a project by project basis. This means that Composer will pull in all the required libraries, dependencies and manage them all in one place.
+
 In this post I'll learn to you how to create a custom package using composer to consume the GitHub API, well in order to create a custom composer package you need create the folder structure, for example:
+
 ```
 |- vendor/name
   |- src
@@ -13,12 +19,14 @@ In this post I'll learn to you how to create a custom package using composer to 
 ```
 
 After create the base structure, in the terminal type:
+
 ```
 git init #initialize git tracking
 composer init #this command will guide you throuhg creating your composer.json file
 ```
 
 #### composer.json file configuration
+
 1. Set package name vendor/name, in this case :`agusrdz/github-api`.
 2. Add a package description: `This is a demo package to use the API of Github.`.
 3. Add an author: `Your name` `your@email.com`.
