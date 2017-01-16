@@ -1,7 +1,7 @@
 Creating a custom Composer package from scratch
 ==================================
 
-## What is Composer?
+# What is Composer?
 
 Composer is a dependency manager for PHP. Composer will manage the 
 dependencies you require on a project by project basis. This means that Composer will pull in all the required libraries, dependencies and manage them all in one place.
@@ -86,7 +86,7 @@ Well, almost that's it... basically this is the composer.json required to create
 }
 ```
 
-And then add the phpunit.xml file on root folder.
+And then add the phpunit.xml file on root folder to run the unit test, it is highly recommended to do unit test when developing this type of packages.
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>
@@ -110,4 +110,4 @@ And then add the phpunit.xml file on root folder.
 ```
 
 Finally we are already to create the logic of this package.
-You can visit the [repo](https://github.com/AgusRdz/agusrdz-github-api) to see all code and check this [demo](#) based on Laravel to see how it works.
+You can visit the [repo](https://github.com/AgusRdz/agusrdz-github-api) to see all code and check this [demo](https://github.com/AgusRdz/github-api-demo) based on Laravel to see how it works.
