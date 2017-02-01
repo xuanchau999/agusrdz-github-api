@@ -6,7 +6,9 @@ Creating a custom Composer package from scratch
 Composer is a dependency manager for PHP. Composer will manage the 
 dependencies you require on a project by project basis. This means that Composer will pull in all the required libraries, dependencies and manage them all in one place.
 
-In this post I'll learn to you how to create a custom package using composer to consume the GitHub API, well in order to create a custom composer package you need create the folder structure, for example:
+You are probably asking yourself how this can give you some benefit, well, just imagine that you are working on a project and write a couple of classes to handle certain actions, time after you start a new project and you need to reuse those features and you use the traditional Copy and Paste, this time you optimize it a little more, now you have two versions of the same functionalities so now copy the new version and replace it in the first project... suppose that instead of 2 projects are 20, it's crazy to think that this rudimentary process must be performed every time the code is adjusted to work. This is where the idea of ​​creating a package that encompasses these functionalities is the best option, since it can be versioned to be used according to the characteristics of the project and giving a greater support facility, I mean that only the code of update a repository, and projects can be updated with a few simple steps... even more, the entire community could have access to it and use it in thousands of projects.
+
+In this post You'll learn how to create a custom package using composer to consume the GitHub API, well in order to create a custom composer package you need to create the folder structure, for example:
 
 ```
 |- vendor/name
@@ -18,7 +20,7 @@ In this post I'll learn to you how to create a custom package using composer to 
   |- vendor
 ```
 
-After create the base structure, in the terminal type:
+After to create the base structure, in the terminal type:
 
 ```
 git init #initialize git tracking
@@ -109,5 +111,6 @@ And then add the phpunit.xml file on root folder to run the unit test, it is hig
 </phpunit>
 ```
 
-Finally we are already to create the logic of this package.
-You can visit the [repo](https://github.com/AgusRdz/agusrdz-github-api) to see all code and check this [demo](https://github.com/AgusRdz/github-api-demo) based on Laravel to see how it works.
+As you can see creating packages with composer is very easy, in this example some of the functionality provided by the GitHub API is consumed and best of all it can be used from any project that manages its dependencies with composer, if you want to see the result you can visit this repository(https://github.com/AgusRdz/agusrdz-github-api) to review how the API is consumed and this one(https://github.com/AgusRdz/github-api-demo) to see it fully functional.
+
+At ClickIT we are dedicated to creating intelligent solutions that give our customers the security of their applications with the minimum effort using packages like this, whether public or private.
