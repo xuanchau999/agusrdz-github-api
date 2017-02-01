@@ -111,6 +111,25 @@ And then add the phpunit.xml file on root folder to run the unit test, it is hig
 </phpunit>
 ```
 
+
+This package is not listed on `Packagist.org` because was created only for demostrative purposes, and in order to test on your project you only need add this to your composer.json:
+
+```
+"require": {
+        ...,
+        ...,
+        "agusrdz/github-api": "dev-master"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/AgusRdz/agusrdz-github-api.git"
+        }
+    ],
+``` 
+
 As you can see creating packages with composer is very easy, in this example some of the functionality provided by the GitHub API is consumed and best of all it can be used from any project that manages its dependencies with composer, if you want to see the result you can visit this repository(https://github.com/AgusRdz/agusrdz-github-api) to review how the API is consumed and this one(https://github.com/AgusRdz/github-api-demo) to see it fully functional.
+
+For this example Packagist(https://packagist.org) is not required because it's focused on not shared repositories but if you want publish your packages for the use of the all developer community you can do it following the same process.
 
 At ClickIT we are dedicated to creating intelligent solutions that give our customers the security of their applications with the minimum effort using packages like this, whether public or private.
